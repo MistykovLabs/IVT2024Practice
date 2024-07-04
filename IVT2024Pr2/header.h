@@ -1,3 +1,5 @@
+// Version 2024.07.03 - version control testing
+
 #pragma once
 
 #include <iostream>
@@ -5,8 +7,6 @@
 #include <random>
 #include <windows.h>
 #include <clocale>
-
-// Version 2024.07.03
 
 using namespace std;
 
