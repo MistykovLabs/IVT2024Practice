@@ -16,7 +16,7 @@ int main() {
     if (user != nullptr && authLib.authorization(user)) {
 
         // Меню открывается после авторизации
-        int choice;
+        int choice = 0;
         do {
             cout << "\n";
             cout << "Меню: \n";
@@ -24,7 +24,12 @@ int main() {
             cout << "2. Получение параметров системы \n";
             cout << "3. Выход \n";
             cout << "Введите свой выбор: ";
-            cin >> choice;
+            while (!(cin >> choice)) {
+                cout << "Ошибка: Введите число. \n";
+                cin.clear();
+                cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n'); // ignore
+                cout << "Выберите существующий пункт меню: ";
+            }
             cout << "\n";
 
             switch (choice) 
