@@ -10,14 +10,14 @@
 
 using namespace std;
 
-// Базовый класс для генерации и проверки капчи
+// Р‘Р°Р·РѕРІС‹Р№ РєР»Р°СЃСЃ РґР»СЏ РіРµРЅРµСЂР°С†РёРё Рё РїСЂРѕРІРµСЂРєРё РєР°РїС‡Рё
 class Captcha {
 public:
     virtual string generateCaptcha() = 0;
     virtual bool verifyCaptcha(const string& input) = 0;
 };
 
-// Класс для простой текстовой капчи
+// РљР»Р°СЃСЃ РґР»СЏ РїСЂРѕСЃС‚РѕР№ С‚РµРєСЃС‚РѕРІРѕР№ РєР°РїС‡Рё
 class TextCaptcha : public Captcha {
 private:
     string captchaText;
@@ -47,13 +47,13 @@ private:
     }
 };
 
-// Базовый класс для хранения учетных данных
+// Р‘Р°Р·РѕРІС‹Р№ РєР»Р°СЃСЃ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ СѓС‡РµС‚РЅС‹С… РґР°РЅРЅС‹С…
 class Credentials {
 public:
     virtual bool isValid() = 0;
 };
 
-// Класс для хранения логина и пароля
+// РљР»Р°СЃСЃ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ Р»РѕРіРёРЅР° Рё РїР°СЂРѕР»СЏ
 class UserCredentials : public Credentials {
 private:
     string login;
@@ -63,7 +63,7 @@ public:
     UserCredentials(const string& login, const string& password) : login(login), password(password) {}
 
     bool isValid() override {
-        // Простая проверка: логин и пароль не пустые
+        // РџСЂРѕСЃС‚Р°СЏ РїСЂРѕРІРµСЂРєР°: Р»РѕРіРёРЅ Рё РїР°СЂРѕР»СЊ РЅРµ РїСѓСЃС‚С‹Рµ
         return !login.empty() && !password.empty();
     }
 
@@ -71,7 +71,7 @@ public:
     const string& getPassword() const { return password; }
 };
 
-// Класс для взаимодействия с пользователем
+// РљР»Р°СЃСЃ РґР»СЏ РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёСЏ СЃ РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј
 class UserInterface {
 public:
     string requestInput(const string& message) {
@@ -86,7 +86,7 @@ public:
     }
 };
 
-// Основной класс библиотеки с функциями
+// РћСЃРЅРѕРІРЅРѕР№ РєР»Р°СЃСЃ Р±РёР±Р»РёРѕС‚РµРєРё СЃ С„СѓРЅРєС†РёСЏРјРё
 class AuthenticationLibrary {
 private:
     Captcha* captchaGenerator;
@@ -103,52 +103,52 @@ public:
         delete userInterface;
     }
 
-    // Регистрация пользователя
+    // Р РµРіРёСЃС‚СЂР°С†РёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
     UserCredentials* registration() {
-        cout << "Окно регистрации" << endl;
-        string login = userInterface->requestInput("Придумайте логин: ");
-        string password = userInterface->requestInput("Придумайте пароль: ");
+        cout << "РћРєРЅРѕ СЂРµРіРёСЃС‚СЂР°С†РёРё" << endl;
+        string login = userInterface->requestInput("РџСЂРёРґСѓРјР°Р№С‚Рµ Р»РѕРіРёРЅ: ");
+        string password = userInterface->requestInput("РџСЂРёРґСѓРјР°Р№С‚Рµ РїР°СЂРѕР»СЊ: ");
 
         UserCredentials* credentials = new UserCredentials(login, password);
         if (credentials->isValid()) {
             system("cls"); //1
-            userInterface->showMessage("Регистрация прошла успешно!");
+            userInterface->showMessage("Р РµРіРёСЃС‚СЂР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ!");
             return credentials;
         }
         else {
             system("cls"); //1
-            userInterface->showMessage("Некорректные данные!");
+            userInterface->showMessage("РќРµРєРѕСЂСЂРµРєС‚РЅС‹Рµ РґР°РЅРЅС‹Рµ!");
             delete credentials;
             return nullptr;
         }
     }
 
-    // Авторизация пользователя
+    // РђРІС‚РѕСЂРёР·Р°С†РёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
     bool authorization(UserCredentials* credentials) {
-        cout << "Окно авторизации" << endl;
-        string login = userInterface->requestInput("Введите логин: ");
-        string password = userInterface->requestInput("Введите пароль: ");
+        cout << "РћРєРЅРѕ Р°РІС‚РѕСЂРёР·Р°С†РёРё" << endl;
+        string login = userInterface->requestInput("Р’РІРµРґРёС‚Рµ Р»РѕРіРёРЅ: ");
+        string password = userInterface->requestInput("Р’РІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ: ");
 
         if ((login == credentials->getLogin()) && (password == credentials->getPassword())) {
             string captcha = captchaGenerator->generateCaptcha();
-            string captchaInput = userInterface->requestInput("Введите капчу (" + captcha + "): ");
+            string captchaInput = userInterface->requestInput("Р’РІРµРґРёС‚Рµ РєР°РїС‡Сѓ (" + captcha + "): ");
 
             if (captchaGenerator->verifyCaptcha(captchaInput)) {
-                userInterface->showMessage("Авторизация успешна!");
+                userInterface->showMessage("РђРІС‚РѕСЂРёР·Р°С†РёСЏ СѓСЃРїРµС€РЅР°!");
                 return true;
             }
             else {
-                userInterface->showMessage("Неверная капча!");
+                userInterface->showMessage("РќРµРІРµСЂРЅР°СЏ РєР°РїС‡Р°!");
             }
         }
         else {
-            userInterface->showMessage("Неверный логин или пароль!");
+            userInterface->showMessage("РќРµРІРµСЂРЅС‹Р№ Р»РѕРіРёРЅ РёР»Рё РїР°СЂРѕР»СЊ!");
         }
         return false;
     }
 
-    // Запрос произвольных параметров (пример)
+    // Р—Р°РїСЂРѕСЃ РїСЂРѕРёР·РІРѕР»СЊРЅС‹С… РїР°СЂР°РјРµС‚СЂРѕРІ (РїСЂРёРјРµСЂ)
     string requestOtherParameters() {
-        return userInterface->requestInput("Введите произвольный параметр: ");
+        return userInterface->requestInput("Р’РІРµРґРёС‚Рµ РїСЂРѕРёР·РІРѕР»СЊРЅС‹Р№ РїР°СЂР°РјРµС‚СЂ: ");
     }
 };
