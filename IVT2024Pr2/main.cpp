@@ -37,7 +37,7 @@ int main() {
                 case 1: {
                     // Установка произвольного параметра
                     string otherParam = authLib.requestOtherParameters();
-                    cout << "Введите произвольный параметр: " << otherParam << endl;
+                    cout << "Получен произвольный параметр: " << otherParam << endl;
                     break;
                 }
                 case 2: {
